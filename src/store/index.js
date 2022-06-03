@@ -1,6 +1,7 @@
 import {createStore} from 'vuex'
 
 import auth from './../modules/auth/store'
+import survey from './../modules/dashboard/modules/surveys/store'
 
 const store = createStore({
    state: {},
@@ -8,7 +9,8 @@ const store = createStore({
    actions: {},
    mutations: {},
    modules: {
-      auth
+      auth,
+      survey
    }
 })
 

@@ -1,22 +1,11 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import Dashboard from '../modules/dashboard/views/Dashboard.vue'
-import Surveys from '../modules/dashboard/views/Surveys.vue'
-import DashboardLayout from '../layouts/DashboardLayout.vue'
 import store from '../store'
 
 import authRoutes from './../modules/auth/router'
+import dashboardRoutes from './../modules/dashboard/router'
 
 const routes = [
-   {
-      path: '/',
-      redirect: '/dashboard',
-      component: DashboardLayout,
-      meta: {requiresAuth: true},
-      children: [
-         {path: '/dashboard', name: 'Dashboard', component: Dashboard},
-         {path: '/surveys', name: 'Surveys', component: Surveys}
-      ]
-   },
+   ...dashboardRoutes,
    ...authRoutes
 ]
 

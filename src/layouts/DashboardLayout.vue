@@ -116,7 +116,8 @@ import {Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIte
 import {MenuIcon, XIcon} from '@heroicons/vue/outline'
 
 const navigation = [
-   {name: 'Dashboard', to: {name: 'Dashboard'}, current: true},
+   // Used path above because the alias which go redirect for (DashboardReports)
+   {name: 'Dashboard', to: {path: '/dashboard'}, current: true},
    {name: 'Survey', to: {name: 'Surveys'}, current: false},
 ]
 

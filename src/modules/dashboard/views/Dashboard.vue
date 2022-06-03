@@ -1,10 +1,3 @@
 <template>
-   <PageComponent title="Dashboard">
-      Dash
-   </PageComponent>
+   <router-view/>
 </template>
-
-<script setup>
-import PageComponent from '../components/PageComponent.vue'
-
-</script>

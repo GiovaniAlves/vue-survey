@@ -7,8 +7,16 @@ export default [
       component: () => import('./../../../layouts/AuthLayout.vue'),
       meta: {isGuest: true},
       children: [
-         {path: '/login', name: 'Login', component: Login},
-         {path: '/register', name: 'Register', component: Register},
+         {
+            path: '/login',
+            name: 'Login',
+            component: Login
+         },
+         {
+            path: '/register',
+            name: 'Register',
+            component: Register
+         },
       ]
    }
 ]
