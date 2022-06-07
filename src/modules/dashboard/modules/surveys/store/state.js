@@ -116,5 +116,9 @@ const tmpSurveys = [
 
 export default {
    surveys: [...tmpSurveys],
+   currentSurvey: {
+      loading: false,
+      data: {}
+   },
    questionTypes: ['text', 'select', 'radio', 'checkbox', 'textarea']
 }

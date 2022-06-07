@@ -1,14 +1,9 @@
 export default {
-   SAVE_SURVEY: (state, survey) => {
-      state.surveys = [...state.surveys, survey]
+   SET_CURRENT_SURVEY: (state, survey) => {
+      state.currentSurvey.data = survey
    },
 
-   UPDATE_SURVEY: (state, survey) => {
-      state.surveys.map((s) => {
-         if (s.id === survey.id) {
-            return survey
-         }
-         return s
-      })
+   SET_CURRENT_SURVEY_LOADING: (state, status) => {
+      state.currentSurvey.loading = status
    }
 }

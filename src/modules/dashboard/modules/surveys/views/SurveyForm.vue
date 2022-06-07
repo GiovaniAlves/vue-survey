@@ -195,7 +195,7 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref, watch} from 'vue'
 import {useStore} from 'vuex'
 import {useRoute, useRouter} from 'vue-router'
 import {v4 as uuidv4} from 'uuid'
@@ -217,10 +217,20 @@ let model = ref({
    questions: [],
 })
 
+// Watch to current survey data change and when this happens we update local model
+watch(
+   () => store.state.survey.currentSurvey.data,
+   (newValue) => {
+      model.value = {
+         //Is used the JSON parse and stringify for not share the same instance of memory the newValue
+         ...JSON.parse(JSON.stringify(newValue)),
+         status: newValue.status,
+      }
+   }
+)
+
 if (route.params.id) {
-   model.value = store.state.survey.surveys.find(
-      (survey) => survey.id === parseInt(route.params.id)
-   )
+   store.dispatch('getSurvey', parseInt(route.params.id))
 }
 
 function onImageChoose(event) {

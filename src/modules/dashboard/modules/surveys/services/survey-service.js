@@ -2,6 +2,10 @@ import axiosClient from '../../../../../axios'
 
 const authenticatedRoute = '/auth/survey'
 
+const get = async id => {
+   return axiosClient.get(`${authenticatedRoute}/${id}`)
+}
+
 const save = async survey => {
    if (survey.id) {
       return axiosClient.put(`${authenticatedRoute}/${survey.id}`, survey)
@@ -11,5 +15,6 @@ const save = async survey => {
 }
 
 export default {
+   get,
    save
 }
