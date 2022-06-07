@@ -47,7 +47,9 @@
 
                      <button
                         type="button"
-                        class="relative overflow-hidden ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        class="relative overflow-hidden ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md
+                           shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none
+                           focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                      >
                         <input
                            type="file"
@@ -56,7 +58,7 @@
                         />
                         Change
                      </button>
-                     
+
                   </div>
                </div>
                <!--/ Image -->
@@ -96,11 +98,7 @@
 
                <!-- Expire Date -->
                <div>
-                  <label
-                     for="expire_date"
-                     class="block text-sm font-medium text-gray-700"
-                  >Expire Date</label
-                  >
+                  <label for="expire_date" class="block text-sm font-medium text-gray-700">Expire Date</label>
                   <input
                      type="date"
                      name="expire_date"
@@ -123,15 +121,74 @@
                      />
                   </div>
                   <div class="ml-3 text-sm">
-                     <label for="status" class="font-medium text-gray-700"
-                     >Active</label
-                     >
+                     <label for="status" class="font-medium text-gray-700">Active</label>
                   </div>
                </div>
                <!--/ Status -->
 
             </div>
             <!--/ Survey Field -->
+
+            <!-- Questions -->
+            <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+               <h3 class="text-2xl pb-4 pt-2 font-semibold flex items-center justify-between">
+                  Questions
+
+                  <!-- Add new question -->
+                  <button
+                     type="button"
+                     @click="addQuestion()"
+                     class="flex items-center text-sm py-1 px-4 rounded-sm text-white bg-gray-600 hover:bg-gray-700"
+                  >
+                     <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-4 w-4"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                     >
+                        <path
+                           fill-rule="evenodd"
+                           d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                           clip-rule="evenodd"
+                        />
+                     </svg>
+                     Add Question
+                  </button>
+                  <!--/ Add new question -->
+               </h3>
+
+               <!-- Don't have questions -->
+               <div v-if="!model.questions.length" class="text-center text-gray-600">
+                  You don't have any questions created
+               </div>
+               <!--/ Don't have questions -->
+
+               <!-- Interating questions -->
+               <div v-for="(question, index) in model.questions" :key="question.id">
+
+                  <!-- question change is a trigger what-(Que) it will be triggered on change events -->
+                  <QuestionEditor
+                     :question="question"
+                     :index="index"
+                     @change="questionChange"
+                     @addQuestion="addQuestion"
+                     @deleteQuestion="deleteQuestion"
+                  />
+               </div>
+               <!--/ Interating questions -->
+
+            </div>
+            <!--/ Questions -->
+
+            <!--/ Save Button -->
+            <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+               <button type="submit"
+                       class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  Save
+               </button>
+            </div>
+            <!--/ Save Button -->
+
          </div>
       </form>
    </PageComponent>
@@ -141,25 +198,56 @@
 import {ref} from 'vue'
 import {useStore} from 'vuex'
 import {useRoute} from 'vue-router'
+import {v4 as uuidv4} from 'uuid'
 import PageComponent from '../../../components/PageComponent.vue'
+import QuestionEditor from '../components/QuestionEditor.vue'
 
 const route = useRoute()
 const store = useStore()
 
-// Create empty survey
+// Create empty survey | use the (ref) here because he is instance reactive do vue - update in real time
 let model = ref({
    title: '',
    status: false,
    description: null,
    image: null,
+   image_url: null,
    expire_date: null,
-   questions: []
+   questions: [],
 })
 
 if (route.params.id) {
    model.value = store.state.survey.surveys.find(
       (survey) => survey.id === parseInt(route.params.id)
    )
+}
+
+function addQuestion(index) {
+   const newQuestion = {
+      id: uuidv4(),
+      type: 'text',
+      question: '',
+      description: '',
+      data: {}
+   }
+
+   //function splice - alter, reorder the content of array and too can remove items
+   model.value.questions.splice(index, 0, newQuestion)
+}
+
+function deleteQuestion(question) {
+   model.value.questions = model.value.questions.filter(
+      (quest) => quest !== question
+   )
+}
+
+function questionChange(question) {
+   model.value.questions = model.value.questions.map((q) => {
+      if (q.id === question.id) {
+         return JSON.parse(JSON.stringify(question))
+      }
+      return q
+   })
 }
 
 function saveSurvey() {
