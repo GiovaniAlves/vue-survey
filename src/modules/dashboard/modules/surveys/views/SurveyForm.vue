@@ -9,7 +9,7 @@
          </div>
       </template>
 
-      <form @submit.prevent="saveSurvey">
+      <form @submit.prevent="save">
          <div class="shadow sm:rounded-md sm:overflow-hidden">
 
             <!-- Survey Field -->
@@ -197,12 +197,13 @@
 <script setup>
 import {ref} from 'vue'
 import {useStore} from 'vuex'
-import {useRoute} from 'vue-router'
+import {useRoute, useRouter} from 'vue-router'
 import {v4 as uuidv4} from 'uuid'
 import PageComponent from '../../../components/PageComponent.vue'
 import QuestionEditor from '../components/QuestionEditor.vue'
 
 const route = useRoute()
+const router = useRouter()
 const store = useStore()
 
 // Create empty survey | use the (ref) here because he is instance reactive do vue - update in real time
@@ -220,6 +221,20 @@ if (route.params.id) {
    model.value = store.state.survey.surveys.find(
       (survey) => survey.id === parseInt(route.params.id)
    )
+}
+
+function onImageChoose(event) {
+   const file = event.target.files[0]
+
+   const reader = new FileReader()
+   reader.onload = () => {
+      // the field will be send on backend as base64 string and apply validations
+      model.value.image = reader.result
+
+      // the field to display here the image
+      model.value.image_url = reader.result
+   }
+   reader.readAsDataURL(file)
 }
 
 function addQuestion(index) {
@@ -250,8 +265,16 @@ function questionChange(question) {
    })
 }
 
-function saveSurvey() {
-
+const saveSurvey = (survey) => store.dispatch('saveSurvey', survey)
+async function save() {
+   try {
+      const response = await saveSurvey(model.value)
+      router.push(
+         {name: 'SurveysEdit', params: {id: response.data.id}}
+      )
+   } catch (e) {
+      console.log('Error save survey: ', e)
+   }
 }
 
 </script>
