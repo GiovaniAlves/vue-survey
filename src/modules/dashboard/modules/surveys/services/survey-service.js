@@ -6,6 +6,10 @@ const destroy = async id => {
    return axiosClient.delete(`${authenticatedRoute}/${id}`)
 }
 
+const index = async () => {
+   return axiosClient.get(`${authenticatedRoute}`)
+}
+
 const get = async id => {
    return axiosClient.get(`${authenticatedRoute}/${id}`)
 }
@@ -20,6 +24,7 @@ const save = async survey => {
 
 export default {
    destroy,
+   index,
    get,
    save
 }

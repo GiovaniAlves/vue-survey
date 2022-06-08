@@ -13,17 +13,30 @@ export default {
          commit('SET_CURRENT_SURVEY', response.data)
          return response
       } catch (e) {
+         const {status} = e.response
+         console.log(status)
          console.log('Error getSurvey: ', e)
       } finally {
          commit('SET_CURRENT_SURVEY_LOADING', false)
       }
    },
 
+   getSurveys: async ({commit}) => {
+      commit('SET_SURVEYS_LOADING', true)
+      try {
+         const response = await SurveyService.index()
+         commit('SET_SURVEYS', response.data)
+         return response
+      } catch (e) {
+         console.log('Error getSurveys: ', e)
+      } finally {
+         commit('SET_SURVEYS_LOADING', false)
+      }
+   },
+
    saveSurvey: async ({commit}, survey) => {
       // Deleting this field because is used only in front end, to display the image.
       delete survey.image_url
-
-      console.log('Survey: ', survey)
 
       const response = await SurveyService.save(survey)
       if (survey.id) {

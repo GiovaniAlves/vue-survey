@@ -118,7 +118,7 @@ import {MenuIcon, XIcon} from '@heroicons/vue/outline'
 const navigation = [
    // Used path above because the alias which go redirect for (DashboardReports)
    {name: 'Dashboard', to: {path: '/dashboard'}, current: true},
-   {name: 'Survey', to: {name: 'Surveys'}, current: false},
+   {name: 'Surveys', to: {name: 'Surveys'}, current: false},
 ]
 
 const store = useStore()
