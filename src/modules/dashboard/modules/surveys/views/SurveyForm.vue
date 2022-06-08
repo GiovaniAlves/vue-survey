@@ -4,12 +4,22 @@
       <template v-slot:header>
          <div class="flex items-center justify-between">
             <h1 class="text-3xl font-bold text-gray-900">
-               {{ model.id ? model.title : 'Create a Survey' }}
+               {{ route.params.id ? model.title : 'Create a Survey' }}
             </h1>
+
+            <button v-if="route.params.id"
+                    type="button"
+                    class="py-2 px-3 text-white bg-red-500 font-bold rounded-md hover:bg-red-600"
+                    @click="deleteSurvey"
+            >
+               Delete Survey
+            </button>
          </div>
       </template>
 
-      <form @submit.prevent="save">
+      <div v-if="surveyLoading" class="flex justify-center font-bold italic text-indigo-900">Loading Survey...</div>
+
+      <form v-else @submit.prevent="save">
          <div class="shadow sm:rounded-md sm:overflow-hidden">
 
             <!-- Survey Field -->
@@ -195,7 +205,7 @@
 </template>
 
 <script setup>
-import {ref, watch} from 'vue'
+import {ref, watch, computed} from 'vue'
 import {useStore} from 'vuex'
 import {useRoute, useRouter} from 'vue-router'
 import {v4 as uuidv4} from 'uuid'
@@ -217,14 +227,15 @@ let model = ref({
    questions: [],
 })
 
+const surveyLoading = computed(() => store.state.survey.currentSurvey.loading)
+
 // Watch to current survey data change and when this happens we update local model
 watch(
    () => store.state.survey.currentSurvey.data,
    (newValue) => {
       model.value = {
          //Is used the JSON parse and stringify for not share the same instance of memory the newValue
-         ...JSON.parse(JSON.stringify(newValue)),
-         status: newValue.status,
+         ...JSON.parse(JSON.stringify(newValue))
       }
    }
 )
@@ -284,6 +295,18 @@ async function save() {
       )
    } catch (e) {
       console.log('Error save survey: ', e)
+   }
+}
+
+const destroySurvey = (id) => store.dispatch('deleteSurvey', id)
+async function deleteSurvey() {
+   try {
+      if (confirm('Wish really delete this survey. This action can not be undone!')) {
+         await destroySurvey(route.params.id)
+         router.push({name: 'Surveys'})
+      }
+   } catch (e) {
+      console.log('Error delete survey: ', e)
    }
 }
 
