@@ -287,9 +287,17 @@ function questionChange(question) {
 }
 
 const saveSurvey = (survey) => store.dispatch('saveSurvey', survey)
+const notify = (msg) => store.commit('SET_NOTIFY', msg)
 async function save() {
    try {
       const response = await saveSurvey(model.value)
+
+      if(route.params.id) {
+         notify({message: 'Updated with Success!'})
+      } else {
+         notify({message: 'Created with Success!'})
+      }
+
       router.push(
          {name: 'SurveysEdit', params: {id: response.data.id}}
       )

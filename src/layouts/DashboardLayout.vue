@@ -104,6 +104,8 @@
       </Disclosure>
 
       <router-view></router-view>
+
+      <Notification />
    </div>
 </template>
 
@@ -114,6 +116,7 @@ import {useRouter} from 'vue-router'
 
 import {Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
 import {MenuIcon, XIcon} from '@heroicons/vue/outline'
+import Notification from '../modules/dashboard/components/Notification.vue'
 
 const navigation = [
    // Used path above because the alias which go redirect for (DashboardReports)
