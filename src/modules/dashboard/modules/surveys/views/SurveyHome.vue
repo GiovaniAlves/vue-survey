@@ -18,8 +18,14 @@
          </div>
       </template>
 
-      <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
-         <SurveyListItem v-for="survey in surveys" :key="survey.id" :survey="survey" @delete="deleteSurvey" />
+      <div v-if="surveysLoading" class="flex justify-center font-bold italic text-indigo-900">Loading Survey...</div>
+
+      <div v-else class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+         <SurveyListItem v-for="survey in surveys.data" :key="survey.id" :survey="survey" @delete="deleteSurvey" />
+      </div>
+
+      <div class="flex justify-center mt-5">
+         <Pagination :links="surveys.links" />
       </div>
 
    </PageComponent>
@@ -30,11 +36,13 @@ import {useStore} from 'vuex'
 import {computed} from 'vue'
 import PageComponent from '../../../components/PageComponent.vue'
 import SurveyListItem from '../components/SurveyListItem.vue'
+import Pagination from '../../../components/Pagination.vue'
 
 const store = useStore()
 
 store.dispatch('getSurveys')
-const surveys = computed(() => store.state.survey.surveys.data)
+const surveys = computed(() => store.state.survey.surveys)
+const surveysLoading = computed(() => store.state.survey.surveys.loading)
 
 const destroySurvey = (id) => store.dispatch('deleteSurvey', id)
 async function deleteSurvey(id) {

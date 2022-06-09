@@ -21,10 +21,10 @@ export default {
       }
    },
 
-   getSurveys: async ({commit}) => {
+   getSurveys: async ({commit}, {url = null} = {}) => {
       commit('SET_SURVEYS_LOADING', true)
       try {
-         const response = await SurveyService.index()
+         const response = await SurveyService.index(url)
          commit('SET_SURVEYS', response.data)
          return response
       } catch (e) {

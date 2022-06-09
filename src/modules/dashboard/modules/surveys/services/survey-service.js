@@ -6,8 +6,9 @@ const destroy = async id => {
    return axiosClient.delete(`${authenticatedRoute}/${id}`)
 }
 
-const index = async () => {
-   return axiosClient.get(`${authenticatedRoute}`)
+const index = async (url) => {
+   url = url || authenticatedRoute
+   return axiosClient.get(`${url}`)
 }
 
 const get = async id => {

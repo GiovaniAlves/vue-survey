@@ -1,6 +1,7 @@
 export default {
    SET_SURVEYS: (state, surveys) => {
       state.surveys.data = surveys.data
+      state.surveys.links = surveys.meta.links
    },
 
    SET_CURRENT_SURVEY: (state, survey) => {

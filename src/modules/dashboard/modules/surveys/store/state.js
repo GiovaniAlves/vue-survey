@@ -1,6 +1,7 @@
 export default {
    surveys: {
       loading: false,
+      links: [],
       data: []
    },
    currentSurvey: {

@@ -260,7 +260,10 @@ function removeOption(opt) {
 }
 
 function typeChange() {
-   // Ex:
+   //To add items the ("model.value.data") need to be an object. In database empty obj is converted in array.
+   if (Array.isArray(model.value.data)) {
+      model.value.data = Object.assign({}, model.value.data)
+   }
    if (shouldHaveOptions()) {
       setOptions(getOptions() || [])
    }
