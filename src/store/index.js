@@ -2,6 +2,7 @@ import {createStore} from 'vuex'
 
 import auth from './../modules/auth/store'
 import survey from './../modules/dashboard/modules/surveys/store'
+import report from './../modules/dashboard/store'
 
 const store = createStore({
    state: {
@@ -26,7 +27,8 @@ const store = createStore({
    },
    modules: {
       auth,
-      survey
+      survey,
+      report
    }
 })
 
