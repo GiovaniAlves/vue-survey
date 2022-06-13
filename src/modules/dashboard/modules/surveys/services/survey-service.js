@@ -2,20 +2,24 @@ import axiosClient from '../../../../../axios'
 
 const authenticatedRoute = '/auth/survey'
 
-const destroy = async id => {
+const destroy = id => {
    return axiosClient.delete(`${authenticatedRoute}/${id}`)
 }
 
-const index = async (url) => {
+const index = (url) => {
    url = url || authenticatedRoute
    return axiosClient.get(`${url}`)
 }
 
-const get = async id => {
+const get = id => {
    return axiosClient.get(`${authenticatedRoute}/${id}`)
 }
 
-const save = async survey => {
+const getBySlug = slug => {
+   return axiosClient.get(`/survey-by-slug/${slug}`)
+}
+
+const save = survey => {
    if (survey.id) {
       return axiosClient.put(`${authenticatedRoute}/${survey.id}`, survey)
    } else {
@@ -23,9 +27,15 @@ const save = async survey => {
    }
 }
 
+const saveAnswers = ({surveyId}, answers) => {
+   return axiosClient.post(`/survey/${surveyId}/answer`, answers)
+}
+
 export default {
    destroy,
    index,
    get,
-   save
+   getBySlug,
+   save,
+   saveAnswers
 }

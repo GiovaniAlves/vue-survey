@@ -1,5 +1,6 @@
 const Dashboard = () => import('../views/Dashboard.vue')
 const Reports = () => import('../views/Reports.vue')
+const SurveyPublicView = () => import('../modules/surveys/views/SurveyPublicView.vue')
 
 import surveysRoutes from './../modules/surveys/router'
 
@@ -25,5 +26,11 @@ export default [
             ]
          }
       ]
+   },
+   {
+      //is here because component can't load default layout
+      path: '/view/survey/:slug',
+      name: 'SurveyPublicView',
+      component: SurveyPublicView
    }
 ]

@@ -21,6 +21,19 @@ export default {
       }
    },
 
+   getSurveyBySlug: async ({commit}, slug) => {
+      commit('SET_CURRENT_SURVEY_LOADING', true)
+      try {
+         const response = await SurveyService.getBySlug(slug)
+         commit('SET_CURRENT_SURVEY', response.data)
+         return response
+      } catch (e) {
+         console.log('Error getSurveyBySlug: ', e)
+      } finally {
+         commit('SET_CURRENT_SURVEY_LOADING', false)
+      }
+   },
+
    getSurveys: async ({commit}, {url = null} = {}) => {
       commit('SET_SURVEYS_LOADING', true)
       try {
@@ -45,5 +58,10 @@ export default {
          commit('SET_CURRENT_SURVEY', response.data)
       }
       return response
+   },
+
+   // eslint-disable-next-line no-empty-pattern
+   saveSurveyAnswers: async ({}, {surveyId, answers}) => {
+      return await SurveyService.saveAnswers(surveyId, answers)
    }
 }

@@ -8,12 +8,12 @@ export default [
       component: SurveyHome
    },
    {
-      path: 'surveys/create',
+      path: 'survey/create',
       name: 'SurveyCreate',
       component: SurveyForm
    },
    {
-      path: 'surveys/:id',
+      path: 'survey/:id',
       name: 'SurveysEdit',
       component: SurveyForm
    }
