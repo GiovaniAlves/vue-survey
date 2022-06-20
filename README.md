@@ -5,7 +5,7 @@
 </div>
 
 <h3 align="center">
-    <a href="https://vue-survey.giovanialves.tech">🔗 VUE SURVEY</a>
+    <a href="https://vue-survey.giovanialves.tech" target="_blank">🔗 VUE SURVEY</a>
 </h3>
 
 
