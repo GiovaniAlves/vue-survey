@@ -1,9 +1,9 @@
 import axiosClient from '../../../axios'
 
-const index = async () => {
+const reports = async () => {
    return await axiosClient.get('/auth/dashboard')
 }
 
 export default {
-   index
+   reports
 }

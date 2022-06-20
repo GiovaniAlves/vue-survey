@@ -1,7 +1,29 @@
-# Vue 3 + Vite
+## <p align="center"> <i>VUE SURVEY</i> </p>
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+<div align="center">
+  <img width="800" src="https://raw.githubusercontent.com/GiovaniAlves/vue-survey/master/public/img/animacao.gif" class="d-block w-100" alt="...">
+</div>
 
-## Recommended IDE Setup
+### Descrição do Projeto
+<p align="center">É um sistema de criação de pesquisas documentais. As pesquisas podem ser criadas com suas respectivas perguntas e depois por meio de um link público gerado automaticamente podem ser disponibilizadas para serem respondidas.</p>
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+### Organização do Projeto (em Módulos)
+- Auth
+    - Login
+    - Register
+- Dashboard
+    - Reports
+    - Surveys
+      - SurveyHome
+      - SurveyForm
+      - SurveyPublicView
+
+### Compilar para desenvolvimento
+```
+npm run dev
+```
+
+### Compilar para produção
+```
+npm run build
+```

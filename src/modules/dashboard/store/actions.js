@@ -4,7 +4,7 @@ export default {
    async getReports ({commit}) {
       commit('SET_LOADING_REPORT', true)
       try {
-         const response = await ReportService.index()
+         const response = await ReportService.reports()
          commit('SET_REPORT_DATA', response.data)
          return response
       } catch (e) {
